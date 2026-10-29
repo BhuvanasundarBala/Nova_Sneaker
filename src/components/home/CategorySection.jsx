@@ -7,7 +7,7 @@ const CATEGORIES = [
     name: "Everyday Lifestyle",
     tag: "ORBIT SERIES",
     count: "₹3,299",
-    image: "/brand/model_orbit.jpg",
+    image: "./brand/model_orbit.jpg",
     gradient: "from-zinc-950 via-zinc-900/60 to-transparent",
     accent: "#B7FF00"
   },
@@ -15,7 +15,7 @@ const CATEGORIES = [
     name: "Performance Running",
     tag: "VELOCITY SPEED",
     count: "₹3,799",
-    image: "/brand/model_velocity.jpg",
+    image: "./brand/model_velocity.jpg",
     gradient: "from-zinc-950 via-zinc-900/60 to-transparent",
     accent: "#B7FF00"
   },
@@ -23,7 +23,7 @@ const CATEGORIES = [
     name: "Streetwear Classic",
     tag: "VOLT HIGH-TOP",
     count: "₹3,599",
-    image: "/brand/model_volt.jpg",
+    image: "./brand/model_volt.jpg",
     gradient: "from-zinc-950 via-zinc-900/60 to-transparent",
     accent: "#B7FF00"
   },
@@ -31,7 +31,7 @@ const CATEGORIES = [
     name: "Outdoor & Trail",
     tag: "TERRAIN TOUGH",
     count: "₹4,299",
-    image: "/brand/model_terrain.jpg",
+    image: "./brand/model_terrain.jpg",
     gradient: "from-zinc-950 via-zinc-900/60 to-transparent",
     accent: "#B7FF00"
   },
@@ -39,7 +39,7 @@ const CATEGORIES = [
     name: "Ultra Comfort",
     tag: "CLOUD 210G",
     count: "₹2,999",
-    image: "/brand/model_cloud.jpg",
+    image: "./brand/model_cloud.jpg",
     gradient: "from-zinc-950 via-zinc-900/60 to-transparent",
     accent: "#B7FF00"
   },
@@ -47,7 +47,7 @@ const CATEGORIES = [
     name: "Limited Edition",
     tag: "ECHO AURORA",
     count: "₹4,499",
-    image: "/brand/model_echo.jpg",
+    image: "./brand/model_echo.jpg",
     gradient: "from-purple-950/80 via-zinc-900/60 to-transparent",
     accent: "#c084fc"
   }

@@ -86,7 +86,7 @@ export function ShopProvider({ children }) {
   // Add to Cart
   const addToCart = (product, size = "UK 9", colorName = null, qty = 1) => {
     const activeColor = colorName || product.colors?.[0]?.name || "Default";
-    const activeImage = product.colors?.find(c => c.name === activeColor)?.heroImage || product.colors?.[0]?.heroImage || "/brand/sneaker-pair-hero.png";
+    const activeImage = product.colors?.find(c => c.name === activeColor)?.heroImage || product.colors?.[0]?.heroImage || "./brand/sneaker-pair-hero.png";
 
     setCart(prevCart => {
       const existingIdx = prevCart.findIndex(

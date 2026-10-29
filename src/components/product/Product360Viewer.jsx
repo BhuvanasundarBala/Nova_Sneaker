@@ -17,7 +17,7 @@ export default function Product360Viewer({
   const hasDedicated360 = spinFrames && spinFrames.length > 0;
   const framesList = hasDedicated360 
     ? spinFrames 
-    : (images && images.length > 0 ? images : ['/brand/shoe_terrain_hero.png']);
+    : (images && images.length > 0 ? images : ['./brand/shoe_terrain_hero.png']);
 
   const frameCount = framesList.length;
   const timerRef = useRef(null);

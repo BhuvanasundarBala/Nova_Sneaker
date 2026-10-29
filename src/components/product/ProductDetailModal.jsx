@@ -41,7 +41,7 @@ export default function ProductDetailModal() {
   if (!product) return null;
 
   const isFavorited = wishlist.includes(product.id);
-  const activeColor = product.colors?.[activeColorIdx] || product.colors?.[0] || { name: 'Default', heroImage: '/brand/nova_hero_studio.jpg' };
+  const activeColor = product.colors?.[activeColorIdx] || product.colors?.[0] || { name: 'Default', heroImage: './brand/nova_hero_studio.jpg' };
   const galleryImages = activeColor.gallery || [activeColor.heroImage];
   const activeMainImage = galleryImages[activeImageIdx] || galleryImages[0];
   const bundleItem = ACCESSORIES[0]; // HydroShield spray

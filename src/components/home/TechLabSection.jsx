@@ -138,7 +138,7 @@ export default function TechLabSection() {
             {/* Sneaker Blueprint Visual */}
             <div className="relative w-full max-w-lg aspect-[4/3] flex items-center justify-center">
               <img 
-                src="/brand/nova_hero_studio.jpg" 
+                src="./brand/nova_hero_studio.jpg" 
                 alt="Authentic NOVA Sneaker Exploded Blueprint" 
                 className="w-full h-auto object-contain filter drop-shadow-[0_25px_35px_rgba(0,0,0,0.95)] contrast-110 rounded-2xl"
               />

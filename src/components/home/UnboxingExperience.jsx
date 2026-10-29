@@ -12,19 +12,19 @@ export default function UnboxingExperience() {
     {
       title: "Matte Black Keepsake Shoebox",
       desc: "Engineered from 100% FSC-certified unbleached rigid cardboard with UV spot-varnished neon lime Star Mark and 'RUN YOUR STORY' script.",
-      image: "/brand/nova_box_unboxing.jpg",
+      image: "./brand/nova_box_unboxing.jpg",
       pill: "STAGE 01 // UNBOXING"
     },
     {
       title: "Tactile Black Hangtag & On-Foot Presence",
       desc: "Every pair arrives with a debossed textured black hangtag, braided neon green lanyard, and unique QR code linking to your shoe's batch verification.",
-      image: "/brand/nova_street_onfoot.jpg",
+      image: "./brand/nova_street_onfoot.jpg",
       pill: "STAGE 02 // AUTHENTICITY"
     },
     {
       title: "The NOVA Apex One Sneakers",
       desc: "Resting inside custom acid-free star tissue wrap with pre-installed ergonomic bio-foam footbeds and an extra set of neon lime 3M reflective laces.",
-      image: "/brand/nova_hero_studio.jpg",
+      image: "./brand/nova_hero_studio.jpg",
       pill: "STAGE 03 // THE SNEAKER"
     }
   ];

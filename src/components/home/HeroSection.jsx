@@ -375,7 +375,7 @@ export default function HeroSection({ onExploreClick, onShopClick }) {
                     className="glass-card p-2 rounded-xl text-center cursor-pointer hover:border-[#B7FF00]/60 transition-all group bg-zinc-950/60"
                   >
                     <img 
-                      src="/brand/model_orbit.jpg" 
+                      src="./brand/model_orbit.jpg" 
                       alt="NOVA Orbit" 
                       className="w-full h-16 object-cover rounded-lg group-hover:scale-105 transition-transform" 
                     />
@@ -387,7 +387,7 @@ export default function HeroSection({ onExploreClick, onShopClick }) {
                     className="glass-card p-2 rounded-xl text-center cursor-pointer hover:border-[#B7FF00]/60 transition-all group bg-zinc-950/60"
                   >
                     <img 
-                      src="/brand/model_velocity.jpg" 
+                      src="./brand/model_velocity.jpg" 
                       alt="NOVA Velocity" 
                       className="w-full h-16 object-cover rounded-lg group-hover:scale-105 transition-transform" 
                     />
@@ -399,7 +399,7 @@ export default function HeroSection({ onExploreClick, onShopClick }) {
                     className="glass-card p-2 rounded-xl text-center cursor-pointer hover:border-[#B7FF00]/60 transition-all group bg-zinc-950/60"
                   >
                     <img 
-                      src="/brand/model_echo.jpg" 
+                      src="./brand/model_echo.jpg" 
                       alt="NOVA Echo" 
                       className="w-full h-16 object-cover rounded-lg group-hover:scale-105 transition-transform" 
                     />
