@@ -84,32 +84,37 @@ export const PRODUCTS = [
       {
         name: "Cloud White & Neon Lime",
         hex: "#F5F5F5",
-        heroImage: "/brand/shoe_orbit_hero.png",
+        heroImage: "/brand/model_orbit.jpg",
         gallery: [
+          "/brand/model_orbit.jpg",
           "/brand/shoe_orbit_hero.png",
           "/brand/shoe_orbit_side.png",
           "/brand/shoe_orbit_heel.png",
-          "/brand/model_orbit.jpg"
+          "/brand/shoe_orbit_front.png"
         ]
       },
       {
         name: "Matte Black & Lime",
         hex: "#1A1A1A",
-        heroImage: "/brand/shoe_orbit_hero.png",
+        heroImage: "/brand/model_orbit.jpg",
         gallery: [
+          "/brand/model_orbit.jpg",
           "/brand/shoe_orbit_hero.png",
           "/brand/shoe_orbit_side.png",
-          "/brand/model_orbit.jpg"
+          "/brand/shoe_orbit_heel.png",
+          "/brand/shoe_orbit_front.png"
         ]
       },
       {
         name: "Volt Green",
         hex: "#B7FF00",
-        heroImage: "/brand/shoe_orbit_hero.png",
+        heroImage: "/brand/model_orbit.jpg",
         gallery: [
+          "/brand/model_orbit.jpg",
           "/brand/shoe_orbit_hero.png",
           "/brand/shoe_orbit_side.png",
-          "/brand/model_orbit.jpg"
+          "/brand/shoe_orbit_heel.png",
+          "/brand/shoe_orbit_front.png"
         ]
       }
     ],
@@ -195,22 +200,25 @@ export const PRODUCTS = [
       {
         name: "Electric Lime & Black",
         hex: "#B7FF00",
-        heroImage: "/brand/shoe_velocity_hero.png",
+        heroImage: "/brand/model_velocity.jpg",
         gallery: [
+          "/brand/model_velocity.jpg",
           "/brand/shoe_velocity_hero.png",
           "/brand/shoe_velocity_side.png",
           "/brand/shoe_velocity_heel.png",
-          "/brand/model_velocity.jpg"
+          "/brand/shoe_velocity_front.png"
         ]
       },
       {
         name: "Stealth Void",
         hex: "#111111",
-        heroImage: "/brand/shoe_velocity_hero.png",
+        heroImage: "/brand/model_velocity.jpg",
         gallery: [
+          "/brand/model_velocity.jpg",
           "/brand/shoe_velocity_hero.png",
           "/brand/shoe_velocity_side.png",
-          "/brand/model_velocity.jpg"
+          "/brand/shoe_velocity_heel.png",
+          "/brand/shoe_velocity_front.png"
         ]
       }
     ],
@@ -295,22 +303,25 @@ export const PRODUCTS = [
       {
         name: "Forest Green & Lime High-Top",
         hex: "#204028",
-        heroImage: "/brand/shoe_volt_hero.png",
+        heroImage: "/brand/model_volt.jpg",
         gallery: [
+          "/brand/model_volt.jpg",
           "/brand/shoe_volt_hero.png",
           "/brand/shoe_volt_side.png",
           "/brand/shoe_volt_heel.png",
-          "/brand/model_volt.jpg"
+          "/brand/shoe_volt_front.png"
         ]
       },
       {
         name: "Classic White",
         hex: "#F8F8F8",
-        heroImage: "/brand/shoe_volt_hero.png",
+        heroImage: "/brand/model_volt.jpg",
         gallery: [
+          "/brand/model_volt.jpg",
           "/brand/shoe_volt_hero.png",
           "/brand/shoe_volt_side.png",
-          "/brand/model_volt.jpg"
+          "/brand/shoe_volt_heel.png",
+          "/brand/shoe_volt_front.png"
         ]
       }
     ],
@@ -396,24 +407,25 @@ export const PRODUCTS = [
       {
         name: "Olive & Amber Earth",
         hex: "#4A5240",
-        heroImage: "/brand/shoe_terrain_hero.png",
+        heroImage: "/brand/model_terrain.jpg",
         gallery: [
+          "/brand/model_terrain.jpg",
           "/brand/shoe_terrain_hero.png",
           "/brand/shoe_terrain_side.png",
           "/brand/shoe_terrain_heel.png",
-          "/brand/shoe_terrain_front.png",
-          "/brand/model_terrain.jpg"
+          "/brand/shoe_terrain_front.png"
         ]
       },
       {
         name: "Charcoal Mountain",
         hex: "#282828",
-        heroImage: "/brand/shoe_terrain_hero.png",
+        heroImage: "/brand/model_terrain.jpg",
         gallery: [
+          "/brand/model_terrain.jpg",
           "/brand/shoe_terrain_hero.png",
           "/brand/shoe_terrain_side.png",
           "/brand/shoe_terrain_heel.png",
-          "/brand/model_terrain.jpg"
+          "/brand/shoe_terrain_front.png"
         ]
       }
     ],
@@ -498,22 +510,25 @@ export const PRODUCTS = [
       {
         name: "Pastel Lavender & Lime Glow",
         hex: "#9F86C0",
-        heroImage: "/brand/shoe_cloud_hero.png",
+        heroImage: "/brand/model_cloud.jpg",
         gallery: [
+          "/brand/model_cloud.jpg",
           "/brand/shoe_cloud_hero.png",
           "/brand/shoe_cloud_side.png",
           "/brand/shoe_cloud_heel.png",
-          "/brand/model_cloud.jpg"
+          "/brand/shoe_cloud_front.png"
         ]
       },
       {
         name: "Cloud Pearl White",
         hex: "#FFFFFF",
-        heroImage: "/brand/shoe_cloud_hero.png",
+        heroImage: "/brand/model_cloud.jpg",
         gallery: [
+          "/brand/model_cloud.jpg",
           "/brand/shoe_cloud_hero.png",
           "/brand/shoe_cloud_side.png",
-          "/brand/model_cloud.jpg"
+          "/brand/shoe_cloud_heel.png",
+          "/brand/shoe_cloud_front.png"
         ]
       }
     ],
@@ -599,22 +614,25 @@ export const PRODUCTS = [
       {
         name: "Aurora Cyber Iridescent",
         hex: "#34E89E",
-        heroImage: "/brand/shoe_echo_hero.png",
+        heroImage: "/brand/model_echo.jpg",
         gallery: [
+          "/brand/model_echo.jpg",
           "/brand/shoe_echo_hero.png",
           "/brand/shoe_echo_side.png",
           "/brand/shoe_echo_heel.png",
-          "/brand/model_echo.jpg"
+          "/brand/shoe_echo_front.png"
         ]
       },
       {
         name: "Deep Space Black",
         hex: "#0A0A0A",
-        heroImage: "/brand/shoe_echo_hero.png",
+        heroImage: "/brand/model_echo.jpg",
         gallery: [
+          "/brand/model_echo.jpg",
           "/brand/shoe_echo_hero.png",
           "/brand/shoe_echo_side.png",
-          "/brand/model_echo.jpg"
+          "/brand/shoe_echo_heel.png",
+          "/brand/shoe_echo_front.png"
         ]
       }
     ],

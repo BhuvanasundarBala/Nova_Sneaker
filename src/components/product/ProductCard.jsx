@@ -109,7 +109,7 @@ export default function ProductCard({ product }) {
         <img 
           src={displayImg} 
           alt={product.name}
-          className="relative z-10 w-full h-full object-contain transform transition-all duration-500 group-hover:scale-108 group-hover:-rotate-3 drop-shadow-[0_15px_20px_rgba(0,0,0,0.8)]"
+          className={`relative z-10 w-full h-full ${isHovered ? 'object-contain scale-108 -rotate-3' : 'object-cover rounded-xl'} transform transition-all duration-500 drop-shadow-[0_15px_20px_rgba(0,0,0,0.8)]`}
           loading="lazy"
         />
 

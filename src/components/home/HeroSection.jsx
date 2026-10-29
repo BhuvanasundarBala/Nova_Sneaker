@@ -375,9 +375,9 @@ export default function HeroSection({ onExploreClick, onShopClick }) {
                     className="glass-card p-2 rounded-xl text-center cursor-pointer hover:border-[#B7FF00]/60 transition-all group bg-zinc-950/60"
                   >
                     <img 
-                      src="/brand/shoe_orbit_hero.png" 
+                      src="/brand/model_orbit.jpg" 
                       alt="NOVA Orbit" 
-                      className="w-full h-16 object-contain rounded-lg group-hover:scale-108 transition-transform drop-shadow" 
+                      className="w-full h-16 object-cover rounded-lg group-hover:scale-105 transition-transform" 
                     />
                     <div className="text-[10px] font-semibold text-zinc-300 mt-1.5 truncate">Orbit (₹3,299)</div>
                   </div>
@@ -387,9 +387,9 @@ export default function HeroSection({ onExploreClick, onShopClick }) {
                     className="glass-card p-2 rounded-xl text-center cursor-pointer hover:border-[#B7FF00]/60 transition-all group bg-zinc-950/60"
                   >
                     <img 
-                      src="/brand/shoe_velocity_hero.png" 
+                      src="/brand/model_velocity.jpg" 
                       alt="NOVA Velocity" 
-                      className="w-full h-16 object-contain rounded-lg group-hover:scale-108 transition-transform drop-shadow" 
+                      className="w-full h-16 object-cover rounded-lg group-hover:scale-105 transition-transform" 
                     />
                     <div className="text-[10px] font-semibold text-zinc-300 mt-1.5 truncate">Velocity (₹3,799)</div>
                   </div>
@@ -399,9 +399,9 @@ export default function HeroSection({ onExploreClick, onShopClick }) {
                     className="glass-card p-2 rounded-xl text-center cursor-pointer hover:border-[#B7FF00]/60 transition-all group bg-zinc-950/60"
                   >
                     <img 
-                      src="/brand/shoe_echo_hero.png" 
+                      src="/brand/model_echo.jpg" 
                       alt="NOVA Echo" 
-                      className="w-full h-16 object-contain rounded-lg group-hover:scale-108 transition-transform drop-shadow" 
+                      className="w-full h-16 object-cover rounded-lg group-hover:scale-105 transition-transform" 
                     />
                     <div className="text-[10px] font-semibold text-zinc-300 mt-1.5 truncate">Echo (₹4,499)</div>
                   </div>
