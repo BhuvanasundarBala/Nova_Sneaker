@@ -21,10 +21,10 @@ const QUESTIONS = [
     title: "Where will you move most in these?",
     subtitle: "Select your primary terrain and activity",
     options: [
-      { label: "Urban Streetwear & Daily Flex", desc: "College, commutes, coffee, gigs", matchCat: "Streetwear", icon: "🏙️" },
-      { label: "Long Distance Road Running", desc: "Marathons, morning miles, speed splits", matchCat: "Running", icon: "⚡" },
-      { label: "HIIT, CrossFit & Heavy Lifting", desc: "Squats, box jumps, gym conditioning", matchCat: "Training", icon: "🏋️" },
-      { label: "Collector Drops & Gallery Openings", desc: "Limited numbered silhouetts, art drops", matchCat: "Limited Edition", icon: "🎨" }
+      { label: "Everyday Lifestyle & Daily Flex", desc: "College, commutes, coffee, gigs", matchCat: "Everyday Lifestyle", icon: "🏙️" },
+      { label: "Long Distance Road Running", desc: "Marathons, morning miles, speed splits", matchCat: "Performance Running", icon: "⚡" },
+      { label: "Outdoor Rugged Monsoon & Trail", desc: "Wet rocks, monsoon streets, hiking", matchCat: "Outdoor & Trail", icon: "⛰️" },
+      { label: "Collector Drops & Night Culture", desc: "Numbered silhouettes, iridescent glow", matchCat: "Limited Edition", icon: "🎨" }
     ]
   },
   {
@@ -72,8 +72,9 @@ export default function AISneakerFinderModal() {
       setTimeout(() => {
         // Find best matching product
         const selectedCat = updated[1]?.matchCat;
-        let matched = products.find(p => p.category === selectedCat);
-        if (!matched) matched = products[0]; // Flagship Apex One default
+        let matched = products.find(p => p.category === selectedCat) 
+          || products.find(p => selectedCat && p.category.toLowerCase().includes(selectedCat.toLowerCase()))
+          || products[0];
 
         setRecommendedProduct(matched);
         setIsCalculating(false);

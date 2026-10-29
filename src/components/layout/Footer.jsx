@@ -5,22 +5,43 @@ import {
   Truck, 
   RotateCcw, 
   Heart,
-  ArrowUpRight
+  ArrowUpRight,
+  Mail,
+  Phone,
+  Ruler,
+  Package
 } from 'lucide-react';
 import { InstagramIcon, YoutubeIcon, LinkedinIcon } from '../ui/SocialIcons';
 import BrandLogo, { StarMarkIcon } from '../brand/BrandLogo';
 import { useShop } from '../../context/ShopContext';
 
 export default function Footer({ onNavigateSection }) {
-  const { setIsAdminView } = useShop();
+  const { setIsAdminView, setSelectedCategory, setIsSizeGuideOpen, showToast } = useShop();
 
-  const handleLinkClick = (id) => {
+  const handleLinkClick = (id, category = null) => {
+    if (category) {
+      setSelectedCategory(category);
+    }
     if (onNavigateSection) {
       onNavigateSection(id);
     } else {
       const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleTrackOrder = () => {
+    showToast("Opening Live SCM 48H Order Tracking...", "info");
+    setIsAdminView(true);
+  };
+
+  const handleDoorstepExchange = () => {
+    showToast("7-Day Doorstep Exchange Active: Free courier pickup within 24 hours.", "success");
+    setIsSizeGuideOpen(true);
+  };
+
+  const handleCareers = () => {
+    showToast("Careers at NOVA: Send your portfolio to careers@novasneakers.in", "info");
   };
 
   return (
@@ -31,32 +52,41 @@ export default function Footer({ onNavigateSection }) {
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            <div className="flex items-center gap-4 p-4 rounded-2xl bg-zinc-950/60 border border-zinc-850">
-              <div className="w-12 h-12 rounded-xl bg-[#B7FF00]/10 border border-[#B7FF00]/30 flex items-center justify-center text-[#B7FF00]">
+            <div 
+              onClick={handleTrackOrder}
+              className="flex items-center gap-4 p-4 rounded-2xl bg-zinc-950/60 border border-zinc-850 hover:border-[#B7FF00]/40 transition-colors cursor-pointer group"
+            >
+              <div className="w-12 h-12 rounded-xl bg-[#B7FF00]/10 border border-[#B7FF00]/30 flex items-center justify-center text-[#B7FF00] group-hover:scale-105 transition-transform">
                 <Truck className="w-6 h-6" />
               </div>
               <div>
-                <h4 className="text-sm font-bold text-white font-heading">Free 48H Air Logistics</h4>
-                <p className="text-[11px] text-zinc-400 mt-0.5">Dispatched from Mumbai, BLR & NCR hubs</p>
+                <h4 className="text-sm font-bold text-white font-heading group-hover:text-[#B7FF00] transition-colors">Free 48H Air Logistics</h4>
+                <p className="text-[11px] text-zinc-400 mt-0.5">Click to view Mumbai, BLR & NCR fulfillment status</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-4 p-4 rounded-2xl bg-zinc-950/60 border border-zinc-850">
-              <div className="w-12 h-12 rounded-xl bg-[#B7FF00]/10 border border-[#B7FF00]/30 flex items-center justify-center text-[#B7FF00]">
+            <div 
+              onClick={handleDoorstepExchange}
+              className="flex items-center gap-4 p-4 rounded-2xl bg-zinc-950/60 border border-zinc-850 hover:border-[#B7FF00]/40 transition-colors cursor-pointer group"
+            >
+              <div className="w-12 h-12 rounded-xl bg-[#B7FF00]/10 border border-[#B7FF00]/30 flex items-center justify-center text-[#B7FF00] group-hover:scale-105 transition-transform">
                 <RotateCcw className="w-6 h-6" />
               </div>
               <div>
-                <h4 className="text-sm font-bold text-white font-heading">7-Day Doorstep Exchange</h4>
+                <h4 className="text-sm font-bold text-white font-heading group-hover:text-[#B7FF00] transition-colors">7-Day Doorstep Exchange</h4>
                 <p className="text-[11px] text-zinc-400 mt-0.5">Zero questions asked size & model swaps</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-4 p-4 rounded-2xl bg-zinc-950/60 border border-zinc-850">
-              <div className="w-12 h-12 rounded-xl bg-[#B7FF00]/10 border border-[#B7FF00]/30 flex items-center justify-center text-[#B7FF00]">
+            <div 
+              onClick={() => handleLinkClick('whynova')}
+              className="flex items-center gap-4 p-4 rounded-2xl bg-zinc-950/60 border border-zinc-850 hover:border-[#B7FF00]/40 transition-colors cursor-pointer group"
+            >
+              <div className="w-12 h-12 rounded-xl bg-[#B7FF00]/10 border border-[#B7FF00]/30 flex items-center justify-center text-[#B7FF00] group-hover:scale-105 transition-transform">
                 <ShieldCheck className="w-6 h-6" />
               </div>
               <div>
-                <h4 className="text-sm font-bold text-white font-heading">Direct-to-Consumer Warranty</h4>
+                <h4 className="text-sm font-bold text-white font-heading group-hover:text-[#B7FF00] transition-colors">Direct-to-Consumer Warranty</h4>
                 <p className="text-[11px] text-zinc-400 mt-0.5">6-month structural warranty on all soles</p>
               </div>
             </div>
@@ -124,28 +154,33 @@ export default function Footer({ onNavigateSection }) {
             </h4>
             <ul className="space-y-2">
               <li>
-                <button onClick={() => handleLinkClick('shop')} className="hover:text-white transition-colors">
+                <button onClick={() => handleLinkClick('shop', 'All')} className="hover:text-white transition-colors cursor-pointer text-left">
                   All Silhouettes
                 </button>
               </li>
               <li>
-                <button onClick={() => handleLinkClick('shop')} className="hover:text-white transition-colors">
+                <button onClick={() => handleLinkClick('shop', 'Performance Running')} className="hover:text-white transition-colors cursor-pointer text-left">
                   Running & Performance
                 </button>
               </li>
               <li>
-                <button onClick={() => handleLinkClick('shop')} className="hover:text-white transition-colors">
+                <button onClick={() => handleLinkClick('shop', 'Streetwear Classic')} className="hover:text-white transition-colors cursor-pointer text-left">
                   Streetwear Chunky Soles
                 </button>
               </li>
               <li>
-                <button onClick={() => handleLinkClick('shop')} className="hover:text-white transition-colors">
+                <button onClick={() => handleLinkClick('shop', 'Outdoor & Trail')} className="hover:text-white transition-colors cursor-pointer text-left">
+                  Outdoor & Trail
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleLinkClick('shop', 'Limited Edition')} className="hover:text-white transition-colors cursor-pointer text-left">
                   Numbered Limited Drops
                 </button>
               </li>
               <li>
-                <button onClick={() => handleLinkClick('shop')} className="hover:text-white transition-colors">
-                  Shoe Care & HydroShield
+                <button onClick={() => handleLinkClick('shop', 'Ultra Comfort')} className="hover:text-white transition-colors cursor-pointer text-left">
+                  Ultra Comfort (Cloud)
                 </button>
               </li>
             </ul>
@@ -158,25 +193,29 @@ export default function Footer({ onNavigateSection }) {
             </h4>
             <ul className="space-y-2">
               <li>
-                <button onClick={() => handleLinkClick('technology')} className="hover:text-white transition-colors">
+                <button onClick={() => handleLinkClick('technology')} className="hover:text-white transition-colors cursor-pointer text-left">
                   AirFlex™ Lab Testing
                 </button>
               </li>
               <li>
-                <button onClick={() => handleLinkClick('whynova')} className="hover:text-white transition-colors">
+                <button onClick={() => handleLinkClick('whynova')} className="hover:text-white transition-colors cursor-pointer text-left">
                   Why NOVA (D2C Transparency)
                 </button>
               </li>
               <li>
-                <button onClick={() => handleLinkClick('journal')} className="hover:text-white transition-colors">
+                <button onClick={() => handleLinkClick('journal')} className="hover:text-white transition-colors cursor-pointer text-left">
                   NOVA Journal & Culture
                 </button>
               </li>
               <li>
-                <span className="text-zinc-500">Sustainability Scorecard (91%)</span>
+                <button onClick={() => handleLinkClick('whynova')} className="hover:text-white transition-colors cursor-pointer text-left">
+                  Sustainability Scorecard (91%)
+                </button>
               </li>
               <li>
-                <span className="text-zinc-500">Careers at NOVA Labs</span>
+                <button onClick={handleCareers} className="hover:text-white transition-colors cursor-pointer text-left">
+                  Careers at NOVA Labs
+                </button>
               </li>
             </ul>
           </div>
@@ -188,19 +227,34 @@ export default function Footer({ onNavigateSection }) {
             </h4>
             <ul className="space-y-2">
               <li>
-                <span className="text-zinc-400">Track 48H Order Status</span>
+                <button onClick={handleTrackOrder} className="hover:text-white transition-colors cursor-pointer text-left flex items-center gap-1.5">
+                  <Package className="w-3 h-3 text-[#B7FF00]" />
+                  <span>Track 48H Order Status</span>
+                </button>
               </li>
               <li>
-                <span className="text-zinc-400">Doorstep Exchange Portal</span>
+                <button onClick={handleDoorstepExchange} className="hover:text-white transition-colors cursor-pointer text-left flex items-center gap-1.5">
+                  <RotateCcw className="w-3 h-3 text-[#B7FF00]" />
+                  <span>Doorstep Exchange Portal</span>
+                </button>
               </li>
               <li>
-                <span className="text-zinc-400">Size & Measurement Guide</span>
+                <button onClick={() => setIsSizeGuideOpen(true)} className="hover:text-white transition-colors cursor-pointer text-left flex items-center gap-1.5">
+                  <Ruler className="w-3 h-3 text-[#B7FF00]" />
+                  <span>Size & Measurement Guide</span>
+                </button>
               </li>
               <li>
-                <span className="text-zinc-400">support@novasneakers.in</span>
+                <a href="mailto:support@novasneakers.in" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <Mail className="w-3 h-3 text-[#B7FF00]" />
+                  <span>support@novasneakers.in</span>
+                </a>
               </li>
               <li>
-                <span className="text-zinc-400">+91 1800-NOVA-RUN (Mon-Sat)</span>
+                <a href="tel:18006682786" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <Phone className="w-3 h-3 text-[#B7FF00]" />
+                  <span>+91 1800-NOVA-RUN (Mon-Sat)</span>
+                </a>
               </li>
             </ul>
           </div>

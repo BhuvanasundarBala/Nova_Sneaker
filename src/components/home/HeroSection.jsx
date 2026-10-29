@@ -239,7 +239,7 @@ export default function HeroSection({ onExploreClick, onShopClick }) {
                 onMouseEnter={playHoverSound}
                 className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-[#B7FF00] text-black font-black text-sm tracking-wider uppercase hover:bg-[#a6eb00] hover:shadow-[0_0_35px_rgba(183,255,0,0.6)] transition-all duration-300 transform active:scale-95 group cursor-pointer"
               >
-                <span>Shop Apex One</span>
+                <span>Shop 2026 Collection</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
               </button>
 

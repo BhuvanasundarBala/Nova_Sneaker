@@ -7,15 +7,20 @@ import {
   ChevronRight, 
   Quote,
   Sparkles,
-  MapPin
+  MapPin,
+  Eye
 } from 'lucide-react';
 import { REVIEWS } from '../../data/products';
+import { useShop } from '../../context/ShopContext';
+import { playClickSound, playSwooshSound } from '../../utils/audio';
 
 export default function ReviewsSection() {
+  const { products, setProductDetailModal } = useShop();
   const [reviewsList, setReviewsList] = useState(REVIEWS);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleLike = (reviewId) => {
+    playClickSound();
     setReviewsList(prev => prev.map(rev => {
       if (rev.id === reviewId) {
         return { ...rev, likes: rev.likes + 1, hasLiked: true };
@@ -25,15 +30,29 @@ export default function ReviewsSection() {
   };
 
   const nextSlide = () => {
+    playClickSound();
     setCurrentIndex((prev) => (prev + 1) % reviewsList.length);
   };
 
   const prevSlide = () => {
+    playClickSound();
     setCurrentIndex((prev) => (prev - 1 + reviewsList.length) % reviewsList.length);
   };
 
+  const handleOpenProduct = (productName) => {
+    playSwooshSound();
+    const matched = products.find(p => productName.toLowerCase().includes(p.name.toLowerCase())) 
+      || products[0];
+    setProductDetailModal(matched);
+  };
+
+  // Cyclically display 4 cards based on currentIndex
+  const visibleReviews = Array.from({ length: Math.min(4, reviewsList.length) }, (_, i) => {
+    return reviewsList[(currentIndex + i) % reviewsList.length];
+  });
+
   return (
-    <section className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
+    <section id="reviews" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
       
       {/* Background glow */}
       <div className="absolute bottom-0 right-10 w-80 h-80 bg-[#B7FF00]/5 rounded-full blur-[100px] pointer-events-none" />
@@ -67,15 +86,17 @@ export default function ReviewsSection() {
             <div className="flex items-center gap-2">
               <button
                 onClick={prevSlide}
-                className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 hover:border-white text-zinc-300 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+                className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 hover:border-[#B7FF00] text-zinc-300 hover:text-[#B7FF00] flex items-center justify-center transition-colors cursor-pointer active:scale-95"
                 aria-label="Previous reviews"
+                title="Previous Reviews"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={nextSlide}
-                className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 hover:border-white text-zinc-300 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+                className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 hover:border-[#B7FF00] text-zinc-300 hover:text-[#B7FF00] flex items-center justify-center transition-colors cursor-pointer active:scale-95"
                 aria-label="Next reviews"
+                title="Next Reviews"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -85,10 +106,10 @@ export default function ReviewsSection() {
 
         {/* Reviews Cards Carousel Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {reviewsList.map((review, idx) => (
+          {visibleReviews.map((review, idx) => (
             <div
-              key={review.id}
-              className="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-[#B7FF00]/40 transition-all duration-300 group"
+              key={`${review.id}-${idx}`}
+              className="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-[#B7FF00]/40 transition-all duration-300 group animate-fadeIn"
             >
               <div className="space-y-3">
                 {/* Rating & Verified Badge */}
@@ -135,13 +156,17 @@ export default function ReviewsSection() {
 
                 {/* Product Purchased Tag & Like Button */}
                 <div className="flex items-center justify-between text-[11px] pt-1">
-                  <span className="text-zinc-500 truncate max-w-[150px]">
+                  <button
+                    onClick={() => handleOpenProduct(review.productName)}
+                    className="text-zinc-400 hover:text-[#B7FF00] hover:underline truncate max-w-[150px] text-left cursor-pointer transition-colors"
+                    title={`View ${review.productName}`}
+                  >
                     {review.productName} ({review.purchasedSize})
-                  </span>
+                  </button>
 
                   <button
                     onClick={() => handleLike(review.id)}
-                    className={`flex items-center gap-1 text-[11px] font-semibold transition-colors ${
+                    className={`flex items-center gap-1 text-[11px] font-semibold transition-colors cursor-pointer ${
                       review.hasLiked 
                         ? 'text-[#B7FF00]' 
                         : 'text-zinc-400 hover:text-white'

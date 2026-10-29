@@ -26,7 +26,7 @@ export default function ProductGrid() {
   const [sortBy, setSortBy] = useState("featured"); // featured, price-low, price-high, rating
   const [selectedGender, setSelectedGender] = useState("All"); // All, Men, Women, Unisex
   const [showFilters, setShowFilters] = useState(false);
-  const [maxPrice, setMaxPrice] = useState(10000);
+  const [maxPrice, setMaxPrice] = useState(5000);
 
   // Filter and sort products
   const filteredProducts = useMemo(() => {
@@ -162,16 +162,16 @@ export default function ProductGrid() {
               </div>
               <input 
                 type="range" 
-                min={5000} 
-                max={10000} 
-                step={500}
+                min={2500} 
+                max={5000} 
+                step={250}
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
                 className="w-full accent-[#B7FF00] cursor-pointer"
               />
               <div className="flex justify-between text-[10px] text-zinc-500">
+                <span>₹2,500</span>
                 <span>₹5,000</span>
-                <span>₹10,000</span>
               </div>
             </div>
 
@@ -180,7 +180,7 @@ export default function ProductGrid() {
               <button
                 onClick={() => {
                   setSelectedGender("All");
-                  setMaxPrice(10000);
+                  setMaxPrice(5000);
                   setSelectedCategory("All");
                 }}
                 className="text-xs text-zinc-400 hover:text-white underline cursor-pointer"

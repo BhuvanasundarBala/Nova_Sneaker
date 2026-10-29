@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { ArrowRight, CheckCircle, Sparkles, ShieldCheck } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { StarMarkIcon } from '../brand/BrandLogo';
+import { useShop } from '../../context/ShopContext';
+import { playClickSound } from '../../utils/audio';
 
 export default function NewsletterSection() {
+  const { showToast } = useShop();
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
@@ -11,7 +14,9 @@ export default function NewsletterSection() {
     e.preventDefault();
     if (!email || !email.includes('@')) return;
 
+    playClickSound();
     setSubscribed(true);
+    showToast("Welcome to NOVA Movement! ₹500 voucher RUNNOVA500 generated.", "success");
     try {
       confetti({
         particleCount: 50,

@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
-import { Heart, MessageCircle, ShoppingBag, ArrowUpRight } from 'lucide-react';
+import { Heart, MessageCircle, ShoppingBag, ArrowUpRight, Tag } from 'lucide-react';
 import { InstagramIcon } from '../ui/SocialIcons';
 import { INSTAGRAM_POSTS } from '../../data/products';
 import { useShop } from '../../context/ShopContext';
+import { playClickSound, playSwooshSound } from '../../utils/audio';
 
 export default function InstagramSection() {
   const { products, setProductDetailModal } = useShop();
 
   const handleShopLook = (post) => {
-    // Match product or default to flagship
-    const matched = products.find(p => p.name.includes('Apex') || p.name.includes('Flux') || p.name.includes('Velocity')) || products[0];
+    playSwooshSound();
+    // Match product by taggedProduct name or fallback to index
+    const matched = products.find(p => post.taggedProduct && post.taggedProduct.toLowerCase().includes(p.name.toLowerCase())) 
+      || products.find(p => post.caption && post.caption.toLowerCase().includes(p.name.toLowerCase()))
+      || products[(post.id - 1) % products.length] 
+      || products[0];
     setProductDetailModal(matched);
   };
 
@@ -51,12 +56,12 @@ export default function InstagramSection() {
               <img 
                 src={post.image} 
                 alt={post.caption} 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-95"
+                className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500 filter brightness-95"
                 loading="lazy"
               />
 
               {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-90 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-75 group-hover:opacity-90 transition-opacity" />
 
               {/* Top Handle & Location Tag */}
               <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-xs text-white z-10">
@@ -70,6 +75,13 @@ export default function InstagramSection() {
 
               {/* Hover Overlay Details */}
               <div className="absolute inset-0 flex flex-col justify-end p-6 z-20 space-y-3 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                {post.taggedProduct && (
+                  <div className="inline-flex items-center gap-1.5 self-start px-2.5 py-1 rounded-full bg-[#B7FF00]/15 border border-[#B7FF00]/40 text-[#B7FF00] text-[10px] font-black uppercase tracking-wider">
+                    <Tag className="w-3 h-3" />
+                    <span>{post.taggedProduct}</span>
+                  </div>
+                )}
+
                 <p className="text-xs text-zinc-200 line-clamp-2">
                   {post.caption}
                 </p>
@@ -93,7 +105,7 @@ export default function InstagramSection() {
                       e.stopPropagation();
                       handleShopLook(post);
                     }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#B7FF00] text-black text-xs font-black hover:bg-[#a6eb00] transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#B7FF00] text-black text-xs font-black hover:bg-[#a6eb00] transition-colors cursor-pointer"
                   >
                     <ShoppingBag className="w-3 h-3 fill-black" />
                     <span>Shop Look</span>

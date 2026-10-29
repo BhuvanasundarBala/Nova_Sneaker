@@ -742,6 +742,48 @@ export const REVIEWS = [
     date: "1 week ago",
     likes: 89,
     purchasedSize: "UK 10"
+  },
+  {
+    id: 4,
+    name: "Vikram Malhotra",
+    city: "Jubilee Hills, Hyderabad",
+    rating: 5,
+    verified: true,
+    productName: "NOVA Volt • High-Top Street",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
+    headline: "Ankle lockdown and brutalist chunky sole are flawless.",
+    comment: "Rocking the Volt high-tops with oversized utility pants. The dual-pod sole feels cushioned without being mushy. Truly premium quality.",
+    date: "1 week ago",
+    likes: 63,
+    purchasedSize: "UK 9"
+  },
+  {
+    id: 5,
+    name: "Meera Nair",
+    city: "Kochi, Kerala",
+    rating: 5,
+    verified: true,
+    productName: "NOVA Terrain • Rugged Trail",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80",
+    headline: "Conquered Western Ghats monsoon trails with zero slips.",
+    comment: "The deep GripX lugs provide incredible wet-rock adhesion. Kept my feet dry through mist and stone trails. Best trail investment ever.",
+    date: "2 weeks ago",
+    likes: 71,
+    purchasedSize: "UK 6"
+  },
+  {
+    id: 6,
+    name: "Siddharth Joshi",
+    city: "Koregaon Park, Pune",
+    rating: 5,
+    verified: true,
+    productName: "NOVA Cloud • Ultra 210g",
+    avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80",
+    headline: "Unbelievably featherweight. It feels like wearing nothing.",
+    comment: "Clocked 18,000 steps across Pune in one day and zero arch fatigue. The foam rebound is like walking on high-performance trampolines.",
+    date: "2 weeks ago",
+    likes: 95,
+    purchasedSize: "UK 8"
   }
 ];
 

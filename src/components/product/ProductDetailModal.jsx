@@ -190,10 +190,14 @@ export default function ProductDetailModal() {
                   <span className="text-zinc-400 block text-[11px]">Free delivery across Mumbai, Delhi, BLR, HYD</span>
                 </div>
               </div>
-              <div className="flex items-center gap-1 text-zinc-400 text-[11px]">
-                <RotateCcw className="w-3.5 h-3.5 text-zinc-400" />
+              <button 
+                onClick={() => setIsSizeGuideOpen(true)}
+                className="flex items-center gap-1 text-zinc-400 hover:text-white text-[11px] cursor-pointer transition-colors"
+                title="View Size & Fit Guarantee"
+              >
+                <RotateCcw className="w-3.5 h-3.5 text-[#B7FF00]" />
                 <span>7-Day Doorstep Exchange</span>
-              </div>
+              </button>
             </div>
 
           </div>
@@ -225,9 +229,18 @@ export default function ProductDetailModal() {
                   <span>{product.rating}</span>
                 </div>
                 <span className="text-zinc-600">•</span>
-                <span className="text-xs text-zinc-400 underline cursor-pointer hover:text-white">
+                <button 
+                  onClick={() => {
+                    setProductDetailModal(null);
+                    setTimeout(() => {
+                      const el = document.getElementById('reviews');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                  }}
+                  className="text-xs text-zinc-400 underline cursor-pointer hover:text-white transition-colors text-left"
+                >
                   {product.reviewCount} Verified Athlete Reviews
-                </span>
+                </button>
               </div>
 
               {/* Price Row */}

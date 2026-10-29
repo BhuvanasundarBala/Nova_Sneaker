@@ -3,12 +3,13 @@ import { Search, X, TrendingUp, Sparkles, ArrowRight } from 'lucide-react';
 import { useShop } from '../../context/ShopContext';
 
 const TRENDING_TAGS = [
-  "Apex One",
-  "Neon Cyber",
-  "Carbon Plate",
-  "Streetwear",
-  "Limited Drop",
-  "Monsoon",
+  "Orbit",
+  "Velocity",
+  "Volt",
+  "Terrain",
+  "Cloud",
+  "Echo",
+  "AirFlex™",
   "48H Delivery"
 ];
 

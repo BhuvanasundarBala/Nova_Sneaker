@@ -137,7 +137,7 @@ export default function UnboxingExperience() {
                 onClick={() => { playSwooshSound(); setProductDetailModal(products[0]); }}
                 className="w-full py-4 rounded-xl bg-[#B7FF00] hover:bg-[#a6eb00] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(183,255,0,0.35)] transition-all active:scale-95"
               >
-                <span>Experience Apex One Drop 01</span>
+                <span>Explore 2026 Lineup (360° Studio)</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
