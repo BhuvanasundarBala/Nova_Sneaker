@@ -1,12 +1,25 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { PRODUCTS } from '../data/products';
+import assetUrl from '../utils/assetUrl';
 
 const ShopContext = createContext();
 
+// Transform all public-folder asset paths in product data to use correct BASE_URL
+// so images load on GitHub Pages (/Nova_Sneaker/) and local dev (/) identically.
+const resolveProductPaths = (products) => products.map(p => ({
+  ...p,
+  spin360Frames: p.spin360Frames?.map(assetUrl) || [],
+  colors: p.colors?.map(c => ({
+    ...c,
+    heroImage: assetUrl(c.heroImage),
+    gallery: c.gallery?.map(assetUrl) || []
+  })) || []
+}));
+
 export function ShopProvider({ children }) {
-  // Products state
-  const [products] = useState(PRODUCTS);
+  // Products state — paths resolved for current deployment base
+  const [products] = useState(() => resolveProductPaths(PRODUCTS));
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   // Cart state with localStorage

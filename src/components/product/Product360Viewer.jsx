@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { RotateCw, Play, Pause, ZoomIn, ZoomOut, Compass, Sparkles, Shield, Zap } from 'lucide-react';
 
 export default function Product360Viewer({ 
@@ -12,31 +12,45 @@ export default function Product360Viewer({
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [zoomLevel, setZoomLevel] = useState(1);
+  const [loaded, setLoaded] = useState(false);
 
-  // Determine active frame source
+  // Determine active frame source (paths already resolved via ShopContext)
   const hasDedicated360 = spinFrames && spinFrames.length > 0;
   const framesList = hasDedicated360 
     ? spinFrames 
-    : (images && images.length > 0 ? images : ['./brand/shoe_terrain_hero.png']);
+    : (images && images.length > 0 ? images : [`${import.meta.env.BASE_URL}brand/shoe_terrain_hero.png`]);
 
   const frameCount = framesList.length;
   const timerRef = useRef(null);
+  // Store fully-decoded, full-resolution Image objects for crisp rendering
+  const preloadedRef = useRef({});
 
-  // Preload all frames on mount for butter-smooth 60fps rotation
+  // High-quality preload: use Image.decode() to ensure full resolution
   useEffect(() => {
-    framesList.forEach((src) => {
+    setLoaded(false);
+    let cancelled = false;
+    const promises = framesList.map((src) => {
+      if (preloadedRef.current[src]) return Promise.resolve();
       const img = new window.Image();
       img.src = src;
+      // hint browser to use full quality decode
+      img.decoding = 'sync';
+      img.fetchPriority = 'high';
+      preloadedRef.current[src] = img;
+      return img.decode ? img.decode().catch(() => {}) : Promise.resolve();
     });
+    Promise.all(promises).then(() => {
+      if (!cancelled) setLoaded(true);
+    });
+    return () => { cancelled = true; };
   }, [framesList]);
 
   // Auto rotation loop
   useEffect(() => {
     if (isAutoRotating) {
-      // Rotate at ~75ms per frame for a continuous 360 spin
       timerRef.current = setInterval(() => {
         setCurrentFrame((prev) => (prev + 1) % frameCount);
-      }, hasDedicated360 ? 80 : 160);
+      }, hasDedicated360 ? 75 : 150);
     } else {
       clearInterval(timerRef.current);
     }
@@ -44,19 +58,18 @@ export default function Product360Viewer({
   }, [isAutoRotating, frameCount, hasDedicated360]);
 
   // Mouse / Touch drag to spin
-  const handleMouseDown = (e) => {
+  const handleMouseDown = useCallback((e) => {
     setIsDragging(true);
-    setStartX(e.clientX || (e.touches && e.touches[0].clientX));
+    setStartX(e.clientX ?? e.touches?.[0]?.clientX ?? 0);
     setIsAutoRotating(false);
-  };
+  }, []);
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = useCallback((e) => {
     if (!isDragging) return;
-    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+    const clientX = e.clientX ?? e.touches?.[0]?.clientX ?? 0;
     const deltaX = clientX - startX;
-    
-    // Smooth drag threshold: 8px for 36 frames
-    const threshold = frameCount >= 24 ? 8 : 18;
+    // 6px per step for snappy but precise control across 36 frames
+    const threshold = frameCount >= 24 ? 6 : 14;
     if (Math.abs(deltaX) >= threshold) {
       const steps = Math.trunc(deltaX / threshold);
       setCurrentFrame((prev) => {
@@ -65,16 +78,15 @@ export default function Product360Viewer({
       });
       setStartX(clientX);
     }
-  };
+  }, [isDragging, startX, frameCount]);
 
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     setIsDragging(false);
-  };
+  }, []);
 
   // Angle calculations (0° to 350° for 36 frames)
   const angleDegrees = Math.round((currentFrame / frameCount) * 360) % 360;
   
-  // Angle descriptions for true sneaker tech depth
   const getAngleDescription = (deg) => {
     if (deg >= 340 || deg <= 20) return "Front Toe Box & HydroShield™ TPU Bumper";
     if (deg > 20 && deg <= 70) return "3/4 Forward Quarter & Dynamic Lacing Web";
@@ -117,7 +129,7 @@ export default function Product360Viewer({
           </button>
 
           <button
-            onClick={() => setZoomLevel(zoomLevel === 1 ? 1.4 : 1)}
+            onClick={() => setZoomLevel(zoomLevel === 1 ? 1.5 : 1)}
             className="p-1.5 rounded-lg bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-white transition-colors cursor-pointer"
             title="Toggle Magnification"
           >
@@ -131,59 +143,90 @@ export default function Product360Viewer({
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
         onTouchStart={handleMouseDown}
         onTouchMove={handleMouseMove}
         onTouchEnd={handleMouseUp}
-        className="relative w-full h-72 sm:h-96 flex items-center justify-center cursor-grab active:cursor-grabbing overflow-hidden group"
+        className="relative w-full h-80 sm:h-[26rem] flex items-center justify-center cursor-grab active:cursor-grabbing overflow-hidden group"
       >
-        {/* Cinematic dark studio stage lighting */}
-        <div className="absolute bottom-6 w-3/4 h-12 bg-black/90 rounded-full blur-xl pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#B7FF00]/5 rounded-full blur-3xl pointer-events-none" />
+        {/* Studio ambient glow */}
+        <div className="absolute bottom-6 w-3/4 h-10 bg-black/90 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#B7FF00]/4 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Dynamic Rotated Visual (Real 360 photo, no white background) */}
+        {/* Crystal-Clear Image Frame */}
         <div 
-          className="relative transition-transform duration-100 ease-out flex items-center justify-center"
+          className="relative flex items-center justify-center transition-transform duration-100 ease-out"
           style={{
-            transform: `scale(${zoomLevel}) ${hasDedicated360 ? '' : `perspective(900px) rotateY(${Math.sin((currentFrame / frameCount) * Math.PI * 2) * 15}deg)`}`
+            transform: `scale(${zoomLevel})`,
+            willChange: 'transform',
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
           }}
         >
           <img 
+            key={activeImage}
             src={activeImage} 
             alt={`${productName} at ${angleDegrees}°`}
-            className="max-h-64 sm:max-h-80 w-auto object-contain filter drop-shadow-[0_25px_35px_rgba(0,0,0,0.95)] pointer-events-none transition-all duration-75 select-none"
+            className="max-h-72 sm:max-h-96 w-auto pointer-events-none select-none"
             draggable="false"
+            style={{
+              // Crystal-clear rendering — no browser upscaling blur
+              imageRendering: 'high-quality',
+              WebkitImageRendering: '-webkit-optimize-contrast',
+              // GPU compositing for stutter-free frame flipping
+              willChange: 'contents',
+              transform: 'translateZ(0)',
+              WebkitTransform: 'translateZ(0)',
+              // Crisp object rendering
+              objectFit: 'contain',
+              // Sharpen filter: subtle contrast boost + no softening
+              filter: 'contrast(1.08) brightness(1.03)',
+              // Prevent subpixel antialiasing blur
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+            }}
           />
 
-          {/* Active Hotspot Callouts synchronized with real rotation angles */}
+          {/* Hotspot Callouts */}
           {(angleDegrees >= 70 && angleDegrees <= 110) && (
-            <div className="absolute bottom-6 right-6 bg-black/90 border border-[#B7FF00] px-3 py-1.5 rounded-full text-[11px] text-[#B7FF00] font-bold shadow-2xl flex items-center gap-1.5 animate-bounce">
+            <div className="absolute bottom-6 right-0 bg-black/90 border border-[#B7FF00] px-3 py-1.5 rounded-full text-[11px] text-[#B7FF00] font-bold shadow-2xl flex items-center gap-1.5 animate-bounce">
               <Sparkles className="w-3.5 h-3.5 text-[#B7FF00]" />
               <span>{productName.includes('Terrain') ? 'GripX™ 4.5mm Multi-Directional Lugs' : 'AirFlex™ Kinetic Pods & Star Mark'}</span>
             </div>
           )}
 
           {(angleDegrees >= 160 && angleDegrees <= 200) && (
-            <div className="absolute top-8 right-8 bg-black/90 border border-amber-400 px-3 py-1.5 rounded-full text-[11px] text-amber-300 font-bold shadow-2xl flex items-center gap-1.5 animate-pulse">
+            <div className="absolute top-8 right-0 bg-black/90 border border-amber-400 px-3 py-1.5 rounded-full text-[11px] text-amber-300 font-bold shadow-2xl flex items-center gap-1.5 animate-pulse">
               <Shield className="w-3.5 h-3.5 text-amber-400" />
               <span>{productName.includes('Terrain') ? 'Reinforced TPU Heel Counter Armor' : 'Sculpted Heel Counter & Achilles Foam'}</span>
             </div>
           )}
 
           {(angleDegrees >= 340 || angleDegrees <= 20) && (
-            <div className="absolute bottom-6 left-6 bg-black/90 border border-[#B7FF00] px-3 py-1.5 rounded-full text-[11px] text-[#B7FF00] font-bold shadow-2xl flex items-center gap-1.5 animate-pulse">
+            <div className="absolute bottom-6 left-0 bg-black/90 border border-[#B7FF00] px-3 py-1.5 rounded-full text-[11px] text-[#B7FF00] font-bold shadow-2xl flex items-center gap-1.5 animate-pulse">
               <Zap className="w-3.5 h-3.5 text-[#B7FF00]" />
               <span>{productName.includes('Terrain') ? 'HydroShield™ Water-Resistant Ripstop' : 'Diamond Aerodynamic FlexMesh™ 3.0'}</span>
             </div>
           )}
         </div>
 
-        {/* Drag Hint Overlay */}
+        {/* Drag Hint */}
         <div className="absolute bottom-2 left-1/2 -translate-x-1/2 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity">
           <span className="text-[11px] font-semibold text-zinc-400 bg-black/80 px-3.5 py-1 rounded-full border border-zinc-700/60 flex items-center gap-1.5 backdrop-blur-md">
             <RotateCw className="w-3 h-3 text-[#B7FF00]" />
             <span>DRAG HORIZONTALLY TO SPIN 360°</span>
           </span>
         </div>
+
+        {/* Loading shimmer overlay */}
+        {!loaded && (
+          <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 rounded-xl z-30">
+            <div className="flex flex-col items-center gap-3">
+              <div className="w-10 h-10 rounded-full border-2 border-[#B7FF00]/30 border-t-[#B7FF00] animate-spin" />
+              <span className="text-[11px] text-[#B7FF00] font-bold tracking-widest">LOADING HD FRAMES…</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Scrub Bar & Angle Indicator */}
@@ -216,10 +259,7 @@ export default function Product360Viewer({
         {/* Quick Angle Jump Buttons */}
         <div className="grid grid-cols-4 gap-2 pt-1 text-[10px] font-bold">
           <button 
-            onClick={() => {
-              setIsAutoRotating(false);
-              setCurrentFrame(0);
-            }}
+            onClick={() => { setIsAutoRotating(false); setCurrentFrame(0); }}
             className={`py-1.5 rounded-lg border transition-all cursor-pointer ${
               angleDegrees >= 340 || angleDegrees <= 20
                 ? 'bg-[#B7FF00] text-black border-[#B7FF00] shadow-[0_0_10px_rgba(183,255,0,0.4)]' 
@@ -229,10 +269,7 @@ export default function Product360Viewer({
             FRONT (0°)
           </button>
           <button 
-            onClick={() => {
-              setIsAutoRotating(false);
-              setCurrentFrame(Math.round(frameCount * 0.25) % frameCount);
-            }}
+            onClick={() => { setIsAutoRotating(false); setCurrentFrame(Math.round(frameCount * 0.25) % frameCount); }}
             className={`py-1.5 rounded-lg border transition-all cursor-pointer ${
               angleDegrees >= 70 && angleDegrees <= 110 
                 ? 'bg-[#B7FF00] text-black border-[#B7FF00] shadow-[0_0_10px_rgba(183,255,0,0.4)]' 
@@ -242,10 +279,7 @@ export default function Product360Viewer({
             PROFILE (90°)
           </button>
           <button 
-            onClick={() => {
-              setIsAutoRotating(false);
-              setCurrentFrame(Math.round(frameCount * 0.5) % frameCount);
-            }}
+            onClick={() => { setIsAutoRotating(false); setCurrentFrame(Math.round(frameCount * 0.5) % frameCount); }}
             className={`py-1.5 rounded-lg border transition-all cursor-pointer ${
               angleDegrees >= 160 && angleDegrees <= 200 
                 ? 'bg-[#B7FF00] text-black border-[#B7FF00] shadow-[0_0_10px_rgba(183,255,0,0.4)]' 
@@ -255,10 +289,7 @@ export default function Product360Viewer({
             HEEL (180°)
           </button>
           <button 
-            onClick={() => {
-              setIsAutoRotating(false);
-              setCurrentFrame(Math.round(frameCount * 0.75) % frameCount);
-            }}
+            onClick={() => { setIsAutoRotating(false); setCurrentFrame(Math.round(frameCount * 0.75) % frameCount); }}
             className={`py-1.5 rounded-lg border transition-all cursor-pointer ${
               angleDegrees >= 250 && angleDegrees <= 290 
                 ? 'bg-[#B7FF00] text-black border-[#B7FF00] shadow-[0_0_10px_rgba(183,255,0,0.4)]' 

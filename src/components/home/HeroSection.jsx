@@ -17,6 +17,7 @@ import {
 import { StarMarkIcon, SpeedTrail } from '../brand/BrandLogo';
 import { useShop } from '../../context/ShopContext';
 import { playClickSound, playHoverSound, playSwooshSound } from '../../utils/audio';
+import assetUrl from '../../utils/assetUrl';
 
 export default function HeroSection({ onExploreClick, onShopClick }) {
   const { openTryOn, setIsQuizOpen, products, setProductDetailModal } = useShop();
@@ -375,7 +376,7 @@ export default function HeroSection({ onExploreClick, onShopClick }) {
                     className="glass-card p-2 rounded-xl text-center cursor-pointer hover:border-[#B7FF00]/60 transition-all group bg-zinc-950/60"
                   >
                     <img 
-                      src="./brand/model_orbit.jpg" 
+                      src={assetUrl('./brand/model_orbit.jpg')} 
                       alt="NOVA Orbit" 
                       className="w-full h-16 object-cover rounded-lg group-hover:scale-105 transition-transform" 
                     />
@@ -387,7 +388,7 @@ export default function HeroSection({ onExploreClick, onShopClick }) {
                     className="glass-card p-2 rounded-xl text-center cursor-pointer hover:border-[#B7FF00]/60 transition-all group bg-zinc-950/60"
                   >
                     <img 
-                      src="./brand/model_velocity.jpg" 
+                      src={assetUrl('./brand/model_velocity.jpg')} 
                       alt="NOVA Velocity" 
                       className="w-full h-16 object-cover rounded-lg group-hover:scale-105 transition-transform" 
                     />
@@ -399,7 +400,7 @@ export default function HeroSection({ onExploreClick, onShopClick }) {
                     className="glass-card p-2 rounded-xl text-center cursor-pointer hover:border-[#B7FF00]/60 transition-all group bg-zinc-950/60"
                   >
                     <img 
-                      src="./brand/model_echo.jpg" 
+                      src={assetUrl('./brand/model_echo.jpg')} 
                       alt="NOVA Echo" 
                       className="w-full h-16 object-cover rounded-lg group-hover:scale-105 transition-transform" 
                     />

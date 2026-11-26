@@ -4,7 +4,8 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: './',
+  // Use absolute base for GitHub Pages (repo name subfolder)
+  base: '/Nova_Sneaker/',
   plugins: [
     react(),
     tailwindcss(),
